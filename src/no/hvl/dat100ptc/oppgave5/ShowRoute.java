@@ -52,38 +52,54 @@ public class ShowRoute extends EasyGraphics {
 
 	// antall y-pixels per breddegrad
 	public double ystep() {
+		double maxlat = GPSUtils.findMax(GPSUtils.getLatitudes(gpspoints));
+		double minlat= GPSUtils.findMin(GPSUtils.getLatitudes(gpspoints));
+		double ystep = MAPYSIZE / (Math.abs(maxlat-minlat));
 	
-		double ystep;
-		
-		// TODO - START
-		
-		throw new UnsupportedOperationException(TODO.method());
-
-		// TODO - SLUTT
-		
+		return ystep;
 	}
 
 	public void showRouteMap(int ybase) {
+		double minlon = GPSUtils.findMin(GPSUtils.getLongitudes(gpspoints));
+		double minlat = GPSUtils.findMin(GPSUtils.getLatitudes(gpspoints));
+		
+		for (int x = 0; x < gpspoints.length-1; x++)  {
+			setColor(0, 255, 0);
+			drawLine(
+					(int)Math.round(MARGIN +(gpspoints[x].getLongitude()-minlon)*xstep()),
+					(int)Math.round(ybase-(gpspoints[x].getLatitude()-minlat)*ystep()),
+					(int)Math.round(MARGIN+(gpspoints[x+1].getLongitude()-minlon)*xstep()),
+					(int)Math.round(ybase-(gpspoints[x+1].getLatitude()-minlat)*ystep()));
+			fillCircle(
+					(int)Math.round(MARGIN+(gpspoints[x].getLongitude()-minlon)*xstep()),
+					(int)Math.round(ybase-(gpspoints[x].getLatitude()-minlat)*ystep()),
+					4);
 
-		// TODO - START
-		
-		throw new UnsupportedOperationException(TODO.method());
-		
-		// TODO - SLUTT
+		}
+		setColor(0, 0, 255);
+		fillCircle((int)Math.round(MARGIN+(gpspoints[gpspoints.length-1].getLongitude()-minlon)*xstep()),
+				(int)Math.round(ybase-(gpspoints[gpspoints.length-1].getLatitude()-minlat)*ystep()), 10);
 	}
 
 	public void showStatistics() {
-
+		
 		int TEXTDISTANCE = 20;
 
 		setColor(0,0,0);
-		setFont("Courier",12);
-		
-		// TODO - START
-		
-		throw new UnsupportedOperationException(TODO.method());
-		
-		// TODO - SLUTT;
+		setFont("Arial",12);
+	
+		drawString("Total Time:", MARGIN, TEXTDISTANCE);
+		drawString("Total Distance:", MARGIN, TEXTDISTANCE*2);
+		drawString("Total Elevation:", MARGIN, TEXTDISTANCE*3);
+		drawString("Max Speed:", MARGIN, TEXTDISTANCE*4);
+		drawString("Average Speed:", MARGIN, TEXTDISTANCE*5);
+		drawString("Energy:", MARGIN, TEXTDISTANCE*6);
+		drawString(GPSUtils.formatTime(gpscomputer.totalTime()), 170, TEXTDISTANCE);
+		drawString(GPSUtils.formatDouble((gpscomputer.totalDistance() / 1000)) + " km", 170, TEXTDISTANCE * 2);
+		drawString(GPSUtils.formatDouble(gpscomputer.totalElevation()) + " m", 170, TEXTDISTANCE * 3);
+		drawString(GPSUtils.formatDouble(gpscomputer.maxSpeed()) + (" km/t"), 170, TEXTDISTANCE * 4);
+		drawString(GPSUtils.formatDouble(gpscomputer.averageSpeed()) + " km/t", 170, TEXTDISTANCE * 5);
+		drawString(GPSUtils.formatDouble(gpscomputer.totalKcal(80)) + " kcal", 170, TEXTDISTANCE * 6);
 	}
 
 }

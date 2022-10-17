@@ -8,6 +8,8 @@ import no.hvl.dat100ptc.oppgave2.GPSDataConverter;
 import no.hvl.dat100ptc.oppgave2.GPSDataFileReader;
 import no.hvl.dat100ptc.oppgave4.GPSComputer;
 
+import java.awt.Color;
+
 import javax.swing.JOptionPane;
 
 public class ShowProfile extends EasyGraphics {
@@ -34,9 +36,8 @@ public class ShowProfile extends EasyGraphics {
 	public void run() {
 
 		int N = gpspoints.length; // number of data points
-
 		makeWindow("Height profile", 2 * MARGIN + 3 * N, 2 * MARGIN + MAXBARHEIGHT);
-
+		
 		// top margin + height of drawing area
 		showHeightProfile(MARGIN + MAXBARHEIGHT); 
 	}
@@ -45,13 +46,17 @@ public class ShowProfile extends EasyGraphics {
 
 		// ybase indicates the position on the y-axis where the columns should start
 	
-		int x = MARGIN,y;
-
-		// TODO - START
-
-		throw new UnsupportedOperationException(TODO.method());
+		int x = MARGIN;
+		setColor(0, 0, 255);
+		for (GPSPoint p:gpspoints) {
+			if (p.getElevation() < 0) {
+			drawLine(x, ybase, x, ybase);
+			} else { 
+			drawLine(x, ybase, x, ybase-(int)p.getElevation());
+			x+=3;
+			}
+		}
 	
-		// TODO - SLUTT
 	}
 
 }
