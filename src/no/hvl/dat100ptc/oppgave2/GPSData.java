@@ -34,14 +34,16 @@ public class GPSData {
 	public boolean insert(String time, String latitude, String longitude, String elevation) {
 		
 		boolean inserted = false;
-		GPSPoint gpspoint = new GPSPoint(GPSDataConverter.toSeconds(time), Double.valueOf(latitude),
-				Double.valueOf(longitude), Double.valueOf(elevation));
+		GPSPoint gpspoint = new GPSPoint
+	   (GPSDataConverter.toSeconds(time), 
+				Double.valueOf(latitude),
+				Double.valueOf(longitude), 
+				Double.valueOf(elevation));
+		
 		if (insertGPS(gpspoint) == true)
 			inserted = true;
 		
 		return inserted;
-		
-		
 		
 	}
 
