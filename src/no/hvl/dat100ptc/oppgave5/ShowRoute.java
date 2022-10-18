@@ -31,22 +31,16 @@ public class ShowRoute extends EasyGraphics {
 	}
 
 	public void run() {
-
 		makeWindow("Route", MAPXSIZE + 2 * MARGIN, MAPYSIZE + 2 * MARGIN);
-
 		showRouteMap(MARGIN + MAPYSIZE);
-		
 		showStatistics();
 	}
 
 	// antall x-pixels per lengdegrad
 	public double xstep() {
-
 		double maxlon = GPSUtils.findMax(GPSUtils.getLongitudes(gpspoints));
 		double minlon = GPSUtils.findMin(GPSUtils.getLongitudes(gpspoints));
-
 		double xstep = MAPXSIZE / (Math.abs(maxlon - minlon)); 
-
 		return xstep;
 	}
 
@@ -55,14 +49,12 @@ public class ShowRoute extends EasyGraphics {
 		double maxlat = GPSUtils.findMax(GPSUtils.getLatitudes(gpspoints));
 		double minlat= GPSUtils.findMin(GPSUtils.getLatitudes(gpspoints));
 		double ystep = MAPYSIZE / (Math.abs(maxlat-minlat));
-	
 		return ystep;
 	}
 
 	public void showRouteMap(int ybase) {
 		double minlon = GPSUtils.findMin(GPSUtils.getLongitudes(gpspoints));
 		double minlat = GPSUtils.findMin(GPSUtils.getLatitudes(gpspoints));
-		
 		for (int x = 0; x < gpspoints.length-1; x++)  {
 			setColor(0, 255, 0);
 			drawLine(
@@ -87,7 +79,7 @@ public class ShowRoute extends EasyGraphics {
 
 		setColor(0,0,0);
 		setFont("Arial",12);
-	
+
 		drawString("Total Time:", MARGIN, TEXTDISTANCE);
 		drawString("Total Distance:", MARGIN, TEXTDISTANCE*2);
 		drawString("Total Elevation:", MARGIN, TEXTDISTANCE*3);
@@ -101,5 +93,6 @@ public class ShowRoute extends EasyGraphics {
 		drawString(GPSUtils.formatDouble(gpscomputer.averageSpeed()) + " km/t", 170, TEXTDISTANCE * 5);
 		drawString(GPSUtils.formatDouble(gpscomputer.totalKcal(80)) + " kcal", 170, TEXTDISTANCE * 6);
 	}
+	
 
 }
